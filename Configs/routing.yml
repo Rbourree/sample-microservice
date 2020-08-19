@@ -1,0 +1,16 @@
+routing:
+
+  # ******** Examples ********
+  - name: example1
+    controller: example1
+    path: /example1
+    method: GET
+    token: optional
+    policies: [all]
+
+  - name: example2
+    controller: example2
+    path: /example2
+    method: GET
+    token: optional
+    policies: [all]
