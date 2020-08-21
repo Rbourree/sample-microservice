@@ -1,16 +1,33 @@
 routing:
 
-  # ******** Examples ********
-  - name: example1
-    controller: example1
-    path: /example1
-    method: GET
+  # ******** Auth ********
+  - name: login
+    controller: auth/login
+    path: /login
+    method: POST
     token: optional
-    policies: [all]
 
-  - name: example2
-    controller: example2
-    path: /example2
+  - name: register
+    controller: auth/register
+    path: /register
+    method: POST
+    token: optional
+
+  - name: logout
+    controller: auth/logout
+    path: /logout
+    method: POST
+    token: optional
+
+  - name: auth
+    controller: auth/getAll
+    path: /auth
     method: GET
     token: optional
-    policies: [all]
+
+# ******** User ********
+  - name: me
+    controller: user/me
+    path: /me
+    method: GET
+    token: required

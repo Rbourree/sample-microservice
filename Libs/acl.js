@@ -8,20 +8,12 @@ module.exports = function (policies, token) {
             if (req.headers.authorization) {
                 jwt.verify(req.headers.authorization, process.env.TOKEN_SECRET, (err, decoded) => {
                     if (err) return res.status(401).json({ success: false, error: "Wrong token" });
-                    if (decoded && decoded.id && decoded.level) {
-                        if(policies.includes(decoded.level) || policies.includes('all')){
-                            next();
-                        }
-                        else{
-                            return res.status(401).json({ success: false, error: "Insufficient permissions to access resource" });
-                        }
+                    if (decoded && decoded.id_user){
+                        req.headers.id_user = decoded.id_user;
+                        return next();
                     }
-                    else{
-                        return res.status(401).json({ success: false, error: "Wrong token" })
-                    }
-
+                    return res.status(401).json({ success: false, error: "Wrong token" })
                 });
-
             }
             else {
                 return res.status(401).json({ success: false, error: "Token required" })
