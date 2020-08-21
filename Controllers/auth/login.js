@@ -42,14 +42,13 @@ module.exports = (req, res) => {
         (user, callback) => {
             delete user.password;
             req.session.key = user.id;
-            console.log(req.session)
             return callback(null, user);
         }
         
     ], (error, user) => {
         if (error) {
-            console.error(error);
-            return res.status(400).json({ success: false, error: error })
+            console.error("Error:", error);
+            return res.status(401).json({ success: false, error: error })
         }
         return res.json({ success: true, data: user })
     })

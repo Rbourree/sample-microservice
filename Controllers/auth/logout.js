@@ -5,14 +5,9 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res) => {
 
-    // Payload validator
-    if (!req.body.email || !validator.isEmail(req.body.email)) return res.status(400).json({ success: false, error: "valid email required" });
-    if (!req.body.password || req.body.password.length < 5) return res.status(400).json({ success: false, error: "valid password required" });
-
-
     waterfall([
 
-        // Login
+        // Logout
         (callback) => {
             req.session.destroy((err) => {
                 if (err) return callback(err)

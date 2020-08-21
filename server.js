@@ -6,6 +6,7 @@ const session = require('express-session');
 const redisStore = require('connect-redis')(session);
 const app = express();
 const client = require("redis").createClient();
+const cors = require('cors')
 
 // ***** Environment variables *****
 require('dotenv').config();
@@ -16,7 +17,7 @@ let envRequired = ["SERVICE_NAME", "PORT", "TOKEN_SECRET", "SESSION_SECRET", "PO
 let errors = [];
 
 for (let i = 0; i < envRequired.length; i++) {
-    if(!process.env[envRequired[i]]) errors.push("Environment variable " + envRequired[i] + " required !");
+    if (!process.env[envRequired[i]]) errors.push("Environment variable " + envRequired[i] + " required !");
 }
 
 if (errors.length > 0) {
@@ -31,9 +32,11 @@ if (errors.length > 0) {
 const day = 24 * 60 * 60 * 1000; // 24h
 app.use(bodyParser.json({ limit: '100mb' }))
 app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }))
+app.use(cors());
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl: 260}),
+    store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl: 260 }),
     saveUninitialized: false,
     resave: false,
     maxAge: day,
