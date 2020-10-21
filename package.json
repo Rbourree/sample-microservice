@@ -1,5 +1,5 @@
 {
-  "name": "sample-microservice",
+  "name": "sample-microservice-es5",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
