@@ -9,7 +9,6 @@ exports.run = function (app) {
     let config = yaml.safeLoad(fs.readFileSync(__dirname + '/../Configs/routing.yml', 'utf8'));
     config.routing.forEach(routing => {
         let requireCtrl = routing.name + "=require('../Controllers/" + routing.controller + ".js');"
-        // let route = "app." + routing.method.toLowerCase() + "('" + routing.path + "', acl(routing.policies, routing.token), multipart, " + routing.name + ");"
         let route =
             `app.` + routing.method.toLowerCase() + `('` + routing.path + `', acl(routing.policies, routing.token), multipart, (req, res) => {`
             + routing.name + `(req)`
@@ -27,5 +26,5 @@ exports.run = function (app) {
 
 
     // ***** 404 Not Found *****
-    app.all('*', function (req, res) { res.sendStatus(404) });
+    app.all('*', (req, res) => { res.sendStatus(404) });
 }

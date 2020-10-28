@@ -9,15 +9,13 @@ const sequelize = new Sequelize(process.env.POSTGRES_URL, { dialect: 'postgres',
 
 module.exports.authenticate = function () {
     sequelize.authenticate()
-        .then(() => {
-            console.log('Connection etablished successfully.');
-        })
+        .then(() => {})
         .catch((err) => {
             console.error('Unable to connect to the database:', err);
         });
 }
 
-sequelize.sync().then(() => { console.log('Tables sync !') })
+sequelize.sync().then(() => { })
 
 
 const modelsPath = __dirname + '/../Models';
