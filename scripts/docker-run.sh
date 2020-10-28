@@ -8,7 +8,7 @@ docker run \
     --network sample \
     --link postgres \
     -v $PWD/server.js:/usr/src/app/server.js \
-    -v $PWD/Config:/usr/src/app/Config \
+    -v $PWD/Configs:/usr/src/app/Configs \
     -v $PWD/Controllers:/usr/src/app/Controllers \
     -v $PWD/Libs:/usr/src/app/Libs \
     -v $PWD/Models:/usr/src/app/Models \
