@@ -7,8 +7,8 @@ module.exports = async (req) => {
     const payload = req.body;
     
     // Payload validator
-    if (!payload.email || !validator.isEmail(payload.email)) throw new Error(400, "valid email required");
-    if (!payload.password || payload.password.length < 5) throw new Error(400, "password required");
+    if (!payload.email || !validator.isEmail(payload.email)) throw new HttpError(400, "valid email required");
+    if (!payload.password || payload.password.length < 5) throw new HttpError(400, "password required");
 
     try {
         // Find user

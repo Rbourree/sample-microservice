@@ -1,6 +1,7 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
 const acl = require('./acl');
+const logs = require('./logs');
 const multipart = require('connect-multiparty')();
 
 // *************** Import routes dynamically ***************
@@ -14,7 +15,8 @@ exports.run = function (app) {
             + routing.name + `(req)`
                 + `.then(response => { res.json(response) })`
                 + `.catch(error => {`
-                    + `if(error.name !== 'HttpError') console.error(error);`
+                    + `logs(req, error);`
+                    + `if(error.name !== 'HttpError') console.error(error.name);`
                     + `if(error.HttpStatus) return res.status(error.HttpStatus).send(error.message);` 
                     + `return res.status(400).send();`
                 + `})`
