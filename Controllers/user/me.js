@@ -1,27 +1,14 @@
 const { postgres } = require('../../Libs/postgres')
-const { waterfall } = require('async')
+const { HttpError } = require('../../Libs/handleError');
 
-module.exports = (req, res) => {
-
-    waterfall([
-
-        // Find user
-        (callback) => {
-            console.log(req.session)
-            postgres.users.findOne({ where: { id: req.headers.id_user }, attributes: { exclude: ["password"] } })
-                .then((user) => {
-                    return callback(null, user.get());
-                })
-                .catch((error) => {
-                    return callback(error);
-                })
-        }
-
-    ], (error, user) => {
-        if (error) {
-            console.error(error);
-            return res.status(400).json({ success: false, error: error })
-        }
-        return res.json({ success: true, data: user })
-    })
+module.exports = async (req) => {
+    const id_user = req.headers.id_user
+    
+    try {
+        let user = await postgres.users.findOne({ where: { id: id_user}});
+        if(!user) throw new HttpError(400, "user nor found");
+        return user;
+    } catch (error) {
+        throw error;
+    }
 }

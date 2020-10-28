@@ -7,18 +7,17 @@ module.exports = function (policies, token) {
         if (token === 'required') {
             if (req.headers.authorization) {
                 jwt.verify(req.headers.authorization, process.env.TOKEN_SECRET, (err, decoded) => {
-                    if (err) return res.status(401).json({ success: false, error: "Wrong token" });
+                    if (err) return res.status(401).send()
                     if (decoded && decoded.id_user){
                         req.headers.id_user = decoded.id_user;
                         return next();
                     }
-                    return res.status(401).json({ success: false, error: "Wrong token" })
+                    return res.status(401).send()
                 });
             }
             else {
-                return res.status(401).json({ success: false, error: "Token required" })
+                return res.status(401).send()
             }
-
         }
         else {
             next();

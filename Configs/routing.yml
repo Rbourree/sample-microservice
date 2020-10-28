@@ -1,33 +1,46 @@
 routing:
 
   # ******** Auth ********
-  - name: login
+  - name: auth_login
     controller: auth/login
     path: /login
     method: POST
     token: optional
 
-  - name: register
+  - name: auth_register
     controller: auth/register
     path: /register
     method: POST
     token: optional
 
-  - name: logout
-    controller: auth/logout
-    path: /logout
-    method: POST
-    token: optional
-
-  - name: auth
-    controller: auth/getAll
-    path: /auth
-    method: GET
-    token: optional
-
-# ******** User ********
-  - name: me
+  # ******** Users ********
+  - name: user_me
     controller: user/me
     path: /me
     method: GET
     token: required
+
+  - name: user_getByID
+    controller: user/getByID
+    path: /user/:id_user
+    method: GET
+    token: required
+
+  - name: user_getAll
+    controller: user/getAll
+    path: /users
+    method: GET
+    token: required
+
+  - name: user_update
+    controller: user/update
+    path: /user/:id_user
+    method: PUT
+    token: required
+
+  - name: user_remove
+    controller: user/remove
+    path: /user/:id_user
+    method: DELETE
+    token: required
+

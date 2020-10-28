@@ -1,22 +1,22 @@
 const { postgres } = require('../../Libs/postgres')
 const validator = require('validator');
+const { HttpError } = require('../../Libs/handleError');
 
-module.exports = (req, res) => {
+module.exports = async (req) => {
+    const payload = req.body;
 
     // Payload validator
-    if (!req.body.email || !validator.isEmail(req.body.email)) return res.status(400).json({ success: false, error: "valid email required" });
-    if (!req.body.password || req.body.password.length < 5) return res.status(400).json({ success: false, error: "valid password required" });
+    if (!payload.email || !validator.isEmail(payload.email)) throw new HttpError(400, "valid email required");
+    if (!payload.password || payload.password.length < 5) throw new HttpError(400, "password required");
 
-
-    // Create user
-    postgres.users.create(req.body)
-        .then((user) => {
-            return res.json({ success: true, data: user });
-        })
-        .catch((error) => {
-            console.log(error)
-            if (error.name === "SequelizeUniqueConstraintError") return res.status(400).json({ success: false, error: "Account already exist" });
-            return res.status(400).json({ success: false, error: error });
-        })
-
+    try {
+        // Create user
+        let user = await postgres.users.create(payload);
+        
+        // End
+        return user;
+    } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") throw new HttpError(400, "Account already exist");
+        throw error;
+    }
 }   
