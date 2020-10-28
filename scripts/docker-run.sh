@@ -12,4 +12,5 @@ docker run \
     -v $PWD/Controllers:/usr/src/app/Controllers \
     -v $PWD/Libs:/usr/src/app/Libs \
     -v $PWD/Models:/usr/src/app/Models \
+    -p $PORT:$PORT \
     sample_api
