@@ -12,7 +12,7 @@ require('dotenv').config();
 const port = process.env.PORT || 3000;
 
 // ***** Errors Environment Variables *****
-let envRequired = ["SERVICE_NAME", "PORT", "TOKEN_SECRET", "SESSION_SECRET", "POSTGRES_URL"]
+let envRequired = ["PORT", "TOKEN_SECRET", "SESSION_SECRET", "POSTGRES_URL"]
 let errors = [];
 
 for (let i = 0; i < envRequired.length; i++) {
@@ -28,18 +28,18 @@ if (errors.length > 0) {
 
 
 // ***** Config Server *****
-// const day = 24 * 60 * 60 * 1000; // 24h
 app.use(bodyParser.json({ limit: '100mb' }))
 app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }))
 app.use(cors());
-
 app.use(session({
     secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
 }));
 
 // ***** Start Server *****
 module.exports = app.listen(port, () => {
     routing.run(app);
-    console.log('Microservice %s listening on', process.env.SERVICE_NAME, port)
+    console.log('API listening on', port)
     postgres.authenticate();
 });
