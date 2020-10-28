@@ -1,12 +1,32 @@
 # Sample Microservice
 
+
+## 1 - Description
 This is a sample nodejs microservice.
 
-### Installation
 
-Install the dependencies and start the server.
 
+## 2 - Requirements
+- Nodejs
+- NPM
+- docker
+- docker-compose
+
+
+
+## 3 - Installation
+
+### Up postgres and redis container
+ ```sh
+ $ docker-compose up -d
+```
+
+### Install package
 ```sh
 $ npm install
+```
+
+### Run API
+ ```sh
 $ npm start
 ```
