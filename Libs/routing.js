@@ -13,7 +13,11 @@ exports.run = function (app) {
             `app.` + routing.method.toLowerCase() + `('` + routing.path + `', acl(routing.policies, routing.token), multipart, (req, res) => {`
             + routing.name + `(req)`
                 + `.then(response => { res.json(response) })`
-                + `.catch(error => { if(error.status) return res.status(error.status).send(error.error); return res.status(400).send(error.message) })`
+                + `.catch(error => {`
+                    + `if(error.name !== 'HttpError') console.error(error);`
+                    + `if(error.HttpStatus) return res.status(error.HttpStatus).send(error.message);` 
+                    + `return res.status(400).send();`
+                + `})`
             + `});`
         eval(requireCtrl);
         eval(route);
