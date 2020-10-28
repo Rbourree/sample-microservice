@@ -32,5 +32,5 @@ $ npm install
 
 ### Run API
  ```sh
-$ npm start
+$ npm run docker
 ```

@@ -4,7 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -e js,yml,json,html server.js"
+    "start": "nodemon -e js,yml,json,html server.js",
+    "docker:build": "./scripts/docker-build.sh",
+    "docker:run": "./scripts/docker-run.sh",
+    "docker": "npm run docker:build && npm run docker:run"
   },
   "author": "",
   "license": "ISC",
