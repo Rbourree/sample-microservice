@@ -2,7 +2,7 @@
 
 
 ## 1 - Description
-This is a sample nodejs microservice.
+This is a sample nodejs API.
 
 
 
@@ -15,6 +15,10 @@ This is a sample nodejs microservice.
 
 
 ## 3 - Installation
+### Create .env file and edit it
+ ```sh
+ $ cp env.template .env
+```
 
 ### Up postgres and redis container
  ```sh
